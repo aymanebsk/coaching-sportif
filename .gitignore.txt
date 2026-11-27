@@ -1,0 +1,6 @@
+target/
+.settings/
+.classpath
+.project
+*.csv
+.DS_Store
