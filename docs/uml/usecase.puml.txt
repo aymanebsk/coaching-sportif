@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Coach" as Coach
+actor "Sportif" as Sportif
+
+rectangle "Coaching Sportif Personnalisé" {
+  usecase "S'authentifier (SHA-256)" as UC_AUTH
+  usecase "Créer / Supprimer un programme" as UC_PROG
+  usecase "Ajouter / Supprimer une séance" as UC_SEANCE_COACH
+  usecase "Analyser progression & stagnation" as UC_ANALYSE
+  usecase "Exporter données (CSV)" as UC_EXPORT
+  usecase "Consulter & filtrer séances\n(TOUTES / A_FAIRE / TERMINEE)" as UC_FILTRE
+  usecase "Valider une séance (TERMINEE)" as UC_VALID
+  usecase "Suivre poids & courbe d'évolution" as UC_POIDS
+  usecase "Enregistrer suivi nutritionnel" as UC_NUTRI
+}
+
+Coach --> UC_AUTH
+Coach --> UC_PROG
+Coach --> UC_SEANCE_COACH
+Coach --> UC_ANALYSE
+Coach --> UC_EXPORT
+
+Sportif --> UC_AUTH
+Sportif --> UC_FILTRE
+Sportif --> UC_VALID
+Sportif --> UC_POIDS
+Sportif --> UC_NUTRI
+Sportif --> UC_EXPORT
+
+UC_VALID .> UC_ANALYSE : <<extend>>
+@enduml

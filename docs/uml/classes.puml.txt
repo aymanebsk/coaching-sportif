@@ -1,0 +1,113 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package "model" {
+  class Utilisateur {
+    - int id
+    - String nom
+    - String prenom
+    - String email
+    - String motDePasse
+    - String role
+    - String objectif
+    - double tailleCm
+    - double poidsInitial
+    - Integer coachId
+  }
+
+  class Programme {
+    - int id
+    - String titre
+    - String description
+    - int dureeSemaines
+    - int coachId
+    - int sportifId
+    - LocalDate dateDebut
+    - String statut
+  }
+
+  class Seance {
+    - int id
+    - int programmeId
+    - String titre
+    - String typeSeance
+    - int dureeMinutes
+    - int caloriesEstimees
+    - LocalDate datePrevue
+    - String statut
+    - String notes
+  }
+
+  class SuiviProgression {
+    - int id
+    - int sportifId
+    - LocalDate dateMesure
+    - double poidsKg
+    - Double tourTailleCm
+    - String commentaire
+  }
+
+  class SuiviNutrition {
+    - int id
+    - int sportifId
+    - LocalDate dateRepas
+    - String repas
+    - int calories
+    - double proteinesG
+    - double glucidesG
+    - double lipidesG
+  }
+}
+
+package "service" {
+  class AuthService {
+    + authenticate(email, password) : Utilisateur
+    + hashSha256(plainPassword) : String
+  }
+
+  class CoachingService {
+    + calculerIMC(poidsKg, tailleCm) : double
+    + calculerObjectifCalories(utilisateur) : int
+    + calculerTauxCompletion(sportifId) : double
+    + detecterStagnation(sportifId) : boolean
+  }
+
+  class ExportService {
+    + exporterRapportCsv(sportifId, destination) : void
+  }
+}
+
+package "dao" {
+  class UtilisateurDAO
+  class ProgrammeDAO
+  class SeanceDAO
+  class SuiviProgressionDAO
+  class SuiviNutritionDAO
+}
+
+package "controller" {
+  class LoginController
+  class CoachDashboardController
+  class SportifDashboardController
+}
+
+Utilisateur "1" --> "*" Programme : encadre / suit
+Programme "1" --> "*" Seance : contient
+Utilisateur "1" --> "*" SuiviProgression : enregistre
+Utilisateur "1" --> "*" SuiviNutrition : enregistre
+
+LoginController --> AuthService
+CoachDashboardController --> CoachingService
+CoachDashboardController --> ExportService
+SportifDashboardController --> CoachingService
+SportifDashboardController --> ExportService
+
+AuthService --> UtilisateurDAO
+CoachingService --> ProgrammeDAO
+CoachingService --> SeanceDAO
+CoachingService --> SuiviProgressionDAO
+CoachingService --> SuiviNutritionDAO
+ExportService --> SeanceDAO
+ExportService --> SuiviProgressionDAO
+ExportService --> SuiviNutritionDAO
+@enduml

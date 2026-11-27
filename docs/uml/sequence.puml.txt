@@ -1,0 +1,17 @@
+@startuml
+actor Sportif
+participant "SportifDashboardController" as CTRL
+participant "CoachingService" as SRV
+participant "SeanceDAO" as DAO
+database "MySQL (coaching_sportif)" as DB
+
+Sportif -> CTRL : Sélectionne séance & clique "Valider"
+CTRL -> SRV : marquerSeanceTerminee(seanceId)
+SRV -> DAO : updateStatut(seanceId, "TERMINEE")
+DAO -> DB : UPDATE seance SET statut='TERMINEE' WHERE id=?
+DB --> DAO : 1 row updated
+DAO --> SRV : true
+SRV -> SRV : calculerTauxCompletion(sportifId)
+SRV --> CTRL : tauxMisAJour
+CTRL --> Sportif : Rafraîchit tableau & indicateurs
+@enduml
