@@ -1,0 +1,32 @@
+=== COMPTES DE TEST - COACHING SPORTIF PERSONNALISÉ ===
+
+Mot de passe commun pour tous les comptes de test : 123456
+
+1. Compte Coach
+   - Email : coach@fit.ma
+   - Mot de passe : 123456
+   - Rôle : COACH
+
+2. Compte Sportif 1 (objectif perte de poids)
+   - Email : youssef@fit.ma
+   - Mot de passe : 123456
+   - Rôle : SPORTIF
+
+3. Compte Sportif 2 (objectif prise de masse)
+   - Email : salma@fit.ma
+   - Mot de passe : 123456
+   - Rôle : SPORTIF
+
+=== COMMANDES POUR RENOMMER LES .puml.txt EN .puml ET POUSSER SUR GITHUB ===
+
+Ouvre ton terminal dans :
+C:\Utilisateurs\PC\eclipse-workspace\coaching-sportif
+
+Exécute :
+ren docs\uml\classes.puml.txt classes.puml
+ren docs\uml\sequence.puml.txt sequence.puml
+ren docs\uml\usecase.puml.txt usecase.puml
+
+git add docs/uml/
+git commit -m "Renommage des fichiers sources PlantUML en .puml"
+git push
